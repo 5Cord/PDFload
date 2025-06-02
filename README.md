@@ -15,7 +15,7 @@ npm install
 ```  
 Запустите сервис:
 ```
-npm start  # или python app.py
+npm start 
 ```
 ___
 
