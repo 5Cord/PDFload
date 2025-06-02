@@ -1,5 +1,5 @@
 import { Responses404 } from '@consta/uikit/Responses404';
-import cl from './styles.module.css'
+import cl from './StyleCard.module.css'
 
 export default function NotFound() {
     return (
