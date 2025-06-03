@@ -1,7 +1,7 @@
 import Navbar from './Navbar'
 import { Route, Routes } from 'react-router-dom'
 import NotFound from './NotFound'
-import Page from './Page'
+import Page from './Card/Card'
 import HomePage from './HomePage'
 
 export default function Menu() {
