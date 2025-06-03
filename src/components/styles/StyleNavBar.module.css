@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: black;
+}
+
+.container a {
+    text-decoration: none;
+    color: #0078D2;
+    font-size: 120%;
+}
+
+.icon {
+    color: #0078D2;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px 0 0;
+}

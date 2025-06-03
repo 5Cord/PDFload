@@ -5,7 +5,7 @@ import { Text } from '@consta/uikit/Text';
 import { Badge } from '@consta/uikit/Badge';
 import { ProgressLine } from '@consta/uikit/ProgressLine';
 import { List } from '@consta/uikit/ListCanary';
-import cl from './StyleCard.module.css';
+import cl from './styles/StyleCard.module.css';
 
 export default function Page() {
   return (

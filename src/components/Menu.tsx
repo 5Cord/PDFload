@@ -7,11 +7,12 @@ import HomePage from './HomePage'
 export default function Menu() {
     return (
         <>
-            <Navbar />
             <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/page" element={<Page />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/" element={<Navbar />} >
+                    <Route index element={<HomePage />} />
+                    <Route path="/page" element={<Page />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route >
             </Routes>
         </>
     )
