@@ -27,8 +27,7 @@ interface Item {
 
 export default function Page() {
   const [dataStud, setDataStud] = useState<Student[]>([]);
-  const [selectedGroup, setSelectedGroup] = useState<string | null>('');
-  console.log(selectedGroup)
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const getDataStudent = () => {
     fetch('http://localhost:8000/students')
       .then(res => res.json())
@@ -45,10 +44,13 @@ export default function Page() {
       id: index + 1
     }));
 
+  console.log(groupItems)
+
   return (
     <Theme preset={presetGpnDefault}>
       <div className={cl.container}>
         <Select
+          className={cl.select}
           items={groupItems}
           value={selectedGroup}
           onChange={setSelectedGroup}
@@ -56,7 +58,7 @@ export default function Page() {
         />
 
         {dataStud
-          .filter(student => selectedGroup ? student.group === selectedGroup.label : false)
+          .filter(student => !selectedGroup || student.group === selectedGroup.label)
           .map(student => (
             <Card key={student.id} verticalSpace="2xl" horizontalSpace="2xl" className={`${cl.studentCard} ${cl.block}`}>
               <div className={cl.avatarContainer}>
