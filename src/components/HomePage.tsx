@@ -1,5 +1,6 @@
 import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
 import { Text } from '@consta/uikit/TextDeprecated';
+import cl from './styles/StyleCard.module.css';
 
 export default function HomePage() {
     return (
@@ -11,7 +12,9 @@ export default function HomePage() {
                 view="primary"
                 weight="bold"
             >
-                Главная страница
+                <div className={cl.container}>
+                    Главная страница
+                </div>
             </Text>
         </Theme>
     )

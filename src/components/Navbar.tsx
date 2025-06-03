@@ -9,14 +9,19 @@ export default function Navbar() {
         <>
             <Header />
             <Layout>
-                <Layout flex={1} className={cl.container}>
-                    <div className={cl.blockContainer}>
+                <Layout flex={1} className={cl.containerMenu}>
+
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) => isActive ? cl.activeLink : ''}
+                    >
                         <IconHome view="secondary" size="xs" className={cl.icon} />
-                        <NavLink to="/" >Главная</NavLink>
-                    </div>
-                    <div className={cl.blockContainer}>
-                        <IconResize view="secondary" size="xs" className={cl.icon} />
-                        <NavLink to="/page">Успеваемость</NavLink>
+                        Главная
+                    </NavLink>
+
+                    <div className={cl.blockcCntainerMenu}>
+
+                        <NavLink to="/page" className={({ isActive }) => isActive ? cl.activeLink : ''}><IconResize view="secondary" size="xs" className={cl.icon} /> Успеваемость </NavLink>
                     </div>
                 </Layout>
                 <Layout flex={5}>

@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <Theme preset={presetGpnDefault}>
       <div className={cl.container}>
-        <Card verticalSpace="2xl" horizontalSpace="2xl" className={cl.studentCard}>
+        <Card verticalSpace="2xl" horizontalSpace="2xl" className={`${cl.studentCard} ${cl.block}`}>
           <div className={cl.avatarContainer}>
             <Avatar
               size="l"

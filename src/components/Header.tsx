@@ -1,5 +1,6 @@
+import cl from './styles/StyleNavBar.module.css'
 export default function Header() {
   return (
-    <div>Header</div>
+    <div className={cl.header}>Header</div>
   )
 }

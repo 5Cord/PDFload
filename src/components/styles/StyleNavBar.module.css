@@ -1,11 +1,13 @@
-.container {
+.containerMenu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     color: black;
+    height: 100vh;
+    background-color: #ffffff;
 }
 
-.container a {
+.containerMenu a {
     text-decoration: none;
     color: #0078D2;
     font-size: 120%;
@@ -16,4 +18,12 @@
     width: 20px;
     height: 20px;
     margin: 0 5px 0 0;
+}
+
+.header {
+    background-color: white;
+}
+
+.activeLink {
+    font-weight: bold;
 }

@@ -11,6 +11,10 @@
     padding: 20px;
 }
 
+.block {
+    background-color: white;
+}
+
 .studentCard {
     width: 100%;
     max-width: 600px;
