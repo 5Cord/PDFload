@@ -27,11 +27,22 @@ interface Item {
 
 export default function Page() {
   const [dataStud, setDataStud] = useState<Student[]>([]);
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<Item | null>(null);
   const getDataStudent = () => {
     fetch('http://localhost:8000/students')
       .then(res => res.json())
-      .then(data => setDataStud(data))
+      .then(data => {
+        setDataStud(data);
+        if (data.length > 0) {
+          const groups = [...new Set(data.map(student => student.group))];
+          if (groups.length > 0) {
+            setSelectedGroup({
+              label: groups[0],
+              id: 1
+            });
+          }
+        }
+      })
       .catch(error => console.error('Ошибка загрузки:', error));
   };
   useEffect(() => {
@@ -44,7 +55,7 @@ export default function Page() {
       id: index + 1
     }));
 
-  console.log(groupItems)
+  console.log(selectedGroup)
 
   return (
     <Theme preset={presetGpnDefault}>
