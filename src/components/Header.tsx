@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useRef } from 'react';
 import cl from './styles/StyleNavBar.module.css'
 import { IconUser } from '@consta/icons/IconUser';
 import { IconBookmarkFilled } from '@consta/icons/IconBookmarkFilled';
@@ -7,6 +8,7 @@ import logo from '../assets/Logo.png'
 import { ScreenshotButton } from './ScreenshotButton';
 
 export default function Header() {
+  const selectRef = useRef(null);
   return (
     <div className={cl.header}>
       <div className={cl.headerLogo}><img src={logo} alt="" /></div>
@@ -14,7 +16,7 @@ export default function Header() {
         <NavLink><div className={cl.headerIcon}><IconUser /></div></NavLink>
         <NavLink><div className={cl.headerIcon}><IconBookmarkFilled /></div></NavLink>
         <NavLink><div className={cl.headerIcon}><IconIntroduction /></div></NavLink>
-        <ScreenshotButton />
+        <ScreenshotButton selectRef={selectRef} />
       </div>
 
     </div>
