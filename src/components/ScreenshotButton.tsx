@@ -1,128 +1,136 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import html2canvas from 'html2canvas';
 import { Button } from '@consta/uikit/Button';
 import { jsPDF } from 'jspdf';
 import { useNavigate } from 'react-router-dom';
-import { Select } from '@consta/uikit/Select';
 
-type PageInfo = {
-  path: string;
-  name: string;
-  hasSelect?: boolean;
-};
+export interface SelectItem {
+  label: string;
+  id: number;
+}
 
-type SelectRefType = React.RefObject<React.ComponentRef<typeof Select>>;
+interface ScreenshotButtonProps {
+  selectItems: SelectItem[];
+  onSelectChange: (item: SelectItem | null) => void;
+  selectedValue: SelectItem | null;
+  currentPagePath: string;
+}
 
-export const ScreenshotButton = ({ selectRef }: { selectRef?: SelectRefType }) => {
+export const ScreenshotButton = ({
+  selectItems,
+  onSelectChange,
+  selectedValue,
+  currentPagePath,
+}: ScreenshotButtonProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
-  const pages: PageInfo[] = [
-    { path: '/', name: 'Главная страница' },
-    { 
-      path: '/page', 
-      name: 'Страница карточки',
-      hasSelect: true
-    },
-  ];
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const captureFullPage = async (pdf: jsPDF, pageName: string) => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const canvas = await html2canvas(document.documentElement, {
-      scrollX: -window.scrollX,
-      scrollY: -window.scrollY,
+  const captureFullPage = async (pdf: jsPDF, title: string) => {
+    window.scrollTo(0, 0);
+    await delay(500); 
+
+    const options = {
+      scrollX: 0,
+      scrollY: 0,
       windowWidth: document.documentElement.scrollWidth,
       windowHeight: document.documentElement.scrollHeight,
       scale: 0.5,
-    });
-
-    const imgData = canvas.toDataURL('image/png');
-    
-    if (pdf.getNumberOfPages() > 0) {
-      pdf.addPage();
-    }
-
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const scale = Math.min(
-      pdfWidth / imgProps.width,
-      pdf.internal.pageSize.getHeight() / imgProps.height
-    );
-
-    pdf.addImage(
-      imgData,
-      'PNG',
-      0,
-      0,
-      imgProps.width * scale,
-      imgProps.height * scale
-    );
-
-    pdf.text(pageName, 10, 10);
-  };
-
-  const captureSelectOptions = async (pdf: jsPDF) => {
-    if (!selectRef?.current) return;
+      useCORS: true,
+      allowTaint: true,
+      logging: true,
+      onclone: (clonedDoc: Document) => {
+        const elements = clonedDoc.querySelectorAll('.tooltip, .popover');
+        elements.forEach((el) => el.remove());
+      }
+    };
 
     try {
-      const currentValue = selectRef.current.props.value;
-      const items = selectRef.current.props.items || [];
+      const canvas = await html2canvas(document.documentElement, options);
+      const imgData = canvas.toDataURL('image/png');
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      const toggleButton = document.querySelector('.Select-Control');
-      if (toggleButton) {
-        (toggleButton as HTMLElement).click();
-        await new Promise(resolve => setTimeout(resolve, 500));
+      const ratio = Math.min(pdfWidth / imgProps.width, pdfHeight / imgProps.height);
+      const scaledWidth = imgProps.width * ratio;
+      const scaledHeight = imgProps.height * ratio;
+
+      if (pdf.getNumberOfPages() > 0) {
+        pdf.addPage();
       }
 
-      for (const item of items) {
-        const option = document.querySelector(`[aria-label="${item.label}"]`);
-        if (option) {
-          (option as HTMLElement).click();
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          await captureFullPage(pdf, `Страница карточки - ${item.label}`);
-        }
-      }
-
-      if (currentValue) {
-        selectRef.current.props.onChange?.(currentValue);
-      }
+      const x = (pdfWidth - scaledWidth) / 2;
+      const y = (pdfHeight - scaledHeight) / 2;
+      
+      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+      pdf.text(title, 10, 10);
     } catch (error) {
-      console.error('Error capturing select options:', error);
+      console.error('Ошибка при создании скриншота:', error);
+      throw error;
     }
   };
 
-  const handleCaptureAll = async () => {
-    setIsProcessing(true);
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const originalPath = window.location.pathname;
-
+  const captureAllSelectVariants = async (pdf: jsPDF) => {
+    const originalValue = selectedValue;
+    
     try {
-      for (const page of pages) {
-        navigate(page.path);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        await captureFullPage(pdf, page.name);
-
-        if (page.hasSelect && selectRef) {
-          await captureSelectOptions(pdf);
-        }
+      for (const item of selectItems) {
+        onSelectChange(item);
+        await delay(1500);
+        
+        window.scrollTo(0, document.documentElement.scrollHeight);
+        await delay(500);
+        window.scrollTo(0, 0);
+        await delay(500);
+        
+        await captureFullPage(pdf, `Группа: ${item.label}`);
       }
-    } catch (error) {
-      console.error('Error generating PDF:', error);
     } finally {
-      navigate(originalPath);
-      pdf.save('full_site_report.pdf');
-      setIsProcessing(false);
+      if (originalValue) {
+        onSelectChange(originalValue);
+        await delay(500);
+      }
     }
   };
+
+const handleCaptureAll = async () => {
+  setIsProcessing(true);
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const originalPath = window.location.pathname;
+
+  try {
+    if (currentPagePath !== '/page') {
+      navigate('/page');
+      await delay(2000); 
+    }
+
+    await captureAllSelectVariants(pdf);
+
+    navigate('/');
+    await delay(2000); 
+
+    await captureFullPage(pdf, 'Главная страница');
+
+    pdf.save('full_page_groups_report.pdf');
+  } catch (error) {
+    console.error('Ошибка при генерации PDF:', error);
+  } finally {
+    if (window.location.pathname !== originalPath) {
+      navigate(originalPath);
+    }
+    setIsProcessing(false);
+  }
+};
+
 
   return (
     <Button
-      label={isProcessing ? "Формирование отчета..." : "Создать полный отчет (PDF)"}
+      label={isProcessing ? 'Создание полного отчета...' : 'Создать полный отчет (PDF)'}
       onClick={handleCaptureAll}
-      size="m"
       disabled={isProcessing}
+      loading={isProcessing}
     />
   );
 };

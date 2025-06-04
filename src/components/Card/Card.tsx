@@ -8,6 +8,7 @@ import { List } from '@consta/uikit/ListCanary';
 import cl from './style/StyleCard.module.css';
 import { Select } from '@consta/uikit/Select';
 import { useEffect, useState } from 'react';
+import { ScreenshotButton } from '../ScreenshotButton';
 
 interface Student {
   id: number;
@@ -28,6 +29,7 @@ interface Item {
 export default function Page() {
   const [dataStud, setDataStud] = useState<Student[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Item | null>(null);
+
   const getDataStudent = () => {
     fetch('http://localhost:8000/students')
       .then(res => res.json())
@@ -45,17 +47,21 @@ export default function Page() {
       })
       .catch(error => console.error('Ошибка загрузки:', error));
   };
+
   useEffect(() => {
     getDataStudent();
   }, []);
 
-  const groupItems: Item[] = [...new Set(dataStud.map(student => student.group))]
-    .map((group, index) => ({
+  const groupItems: Item[] = [...new Set(dataStud.map(student => student.group))].map(
+    (group, index) => ({
       label: group,
-      id: index + 1
-    }));
+      id: index + 1,
+    })
+  );
 
-  console.log(selectedGroup)
+  const filteredStudents = dataStud.filter(
+    (student) => !selectedGroup || student.group === selectedGroup.label
+  );
 
   return (
     <Theme preset={presetGpnDefault}>
@@ -68,70 +74,77 @@ export default function Page() {
           placeholder="Выберите группу"
         />
 
-        {dataStud
-          .filter(student => !selectedGroup || student.group === selectedGroup.label)
-          .map(student => (
-            <Card key={student.id} verticalSpace="2xl" horizontalSpace="2xl" className={`${cl.studentCard} ${cl.block}`}>
-              <div className={cl.avatarContainer}>
-                <Avatar
-                  size="l"
-                  name={student.fullName}
-                  className={cl.avatar}
-                />
-                <div className={cl.infoContainer}>
-                  <Text size="2xl" weight="bold" view="primary" lineHeight="m">
-                    {student.fullName}
-                  </Text>
-                  <Text size="s" view="secondary" lineHeight="m">
-                    Группа: {student.group}
-                  </Text>
-                  <Badge
-                    label={`Успеваемость: ${student.progress}%`}
-                    status="success"
-                    size="s"
-                    className={cl.progressBadge}
-                  />
-                </div>
-              </div>
-
-              <div className={cl.section}>
-                <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
-                  Прогресс обучения
+        {filteredStudents.map((student) => (
+          <Card
+            key={student.id}
+            verticalSpace="2xl"
+            horizontalSpace="2xl"
+            className={`${cl.studentCard} ${cl.block}`}
+          >
+            <div className={cl.avatarContainer}>
+              <Avatar size="l" name={student.fullName} className={cl.avatar} />
+              <div className={cl.infoContainer}>
+                <Text size="2xl" weight="bold" view="primary" lineHeight="m">
+                  {student.fullName}
                 </Text>
-                <ProgressLine value={student.progress} />
-              </div>
-
-              <div className={cl.section}>
-                <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
-                  Оценки
+                <Text size="s" view="secondary" lineHeight="m">
+                  Группа: {student.group}
                 </Text>
-                <div className={cl.gradesGrid}>
-                  {Object.entries(student.grades).map(([subject, grade]) => (
-                    <div key={subject} className={cl.gradeItem}>
-                      <Text>{subject}: <b>{grade}</b></Text>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className={cl.section}>
-                <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
-                  Достижения
-                </Text>
-                <List
-                  items={student.achievements}
-                  getItemLabel={(item) => item}
-                  renderItem={(item) => (
-                    <div className={cl.achievementItem}>
-                      <Badge status="normal" size="xs" />
-                      <Text>{item}</Text>
-                    </div>
-                  )}
+                <Badge
+                  label={`Успеваемость: ${student.progress}%`}
+                  status="success"
+                  size="s"
+                  className={cl.progressBadge}
                 />
               </div>
-            </Card>
-          ))}
+            </div>
+
+            <div className={cl.section}>
+              <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
+                Прогресс обучения
+              </Text>
+              <ProgressLine value={student.progress} />
+            </div>
+
+            <div className={cl.section}>
+              <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
+                Оценки
+              </Text>
+              <div className={cl.gradesGrid}>
+                {Object.entries(student.grades).map(([subject, grade]) => (
+                  <div key={subject} className={cl.gradeItem}>
+                    <Text>
+                      {subject}: <b>{grade}</b>
+                    </Text>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={cl.section}>
+              <Text size="l" weight="semibold" view="primary" className={cl.sectionTitle}>
+                Достижения
+              </Text>
+              <List
+                items={student.achievements}
+                getItemLabel={(item) => item}
+                renderItem={(item) => (
+                  <div className={cl.achievementItem}>
+                    <Badge status="normal" size="xs" />
+                    <Text>{item}</Text>
+                  </div>
+                )}
+              />
+            </div>
+          </Card>
+        ))}
+
       </div>
+      <ScreenshotButton
+        selectItems={groupItems}
+        onSelectChange={setSelectedGroup}
+        selectedValue={selectedGroup}
+      />
     </Theme>
   );
 }
