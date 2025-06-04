@@ -10,9 +10,9 @@ export default function Header() {
     <div className={cl.header}>
       <div className={cl.headerLogo}><img src={logo} alt="" /></div>
       <div className={cl.containerHeaderIcon}>
-        <NavLink><div className={cl.headerIcon}><IconUser /></div></NavLink>
-        <NavLink><div className={cl.headerIcon}><IconBookmarkFilled /></div></NavLink>
-        <NavLink><div className={cl.headerIcon}><IconIntroduction /></div></NavLink>
+        <NavLink to={''}><div className={cl.headerIcon}><IconUser /></div></NavLink>
+        <NavLink to={''}><div className={cl.headerIcon}><IconBookmarkFilled /></div></NavLink>
+        <NavLink to={''}><div className={cl.headerIcon}><IconIntroduction /></div></NavLink>
       </div>
 
     </div>

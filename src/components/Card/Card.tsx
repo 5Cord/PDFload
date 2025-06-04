@@ -36,7 +36,7 @@ export default function Page() {
       .then(data => {
         setDataStud(data);
         if (data.length > 0) {
-          const groups = [...new Set(data.map(student => student.group))];
+          const groups = [...new Set(data.map((student: { group: never }) => student.group))];
           if (groups.length > 0) {
             setSelectedGroup({
               label: groups[0],
@@ -143,8 +143,7 @@ export default function Page() {
       <ScreenshotButton
         selectItems={groupItems}
         onSelectChange={setSelectedGroup}
-        selectedValue={selectedGroup}
-      />
+        selectedValue={selectedGroup} currentPagePath={''}      />
     </Theme>
   );
 }
