@@ -8,7 +8,8 @@ import { List } from '@consta/uikit/ListCanary';
 import cl from './style/StyleCard.module.css';
 import { Select } from '@consta/uikit/Select';
 import { useEffect, useState } from 'react';
-import { ScreenshotButton } from '../ScreenshotButton';
+// import { ScreenshotButton } from '../ScreenshotButton';
+import { Button } from '@consta/uikit/Button';
 
 interface Student {
   id: number;
@@ -29,6 +30,18 @@ interface Item {
 export default function Page() {
   const [dataStud, setDataStud] = useState<Student[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Item | null>(null);
+
+  const runPuppeteer = () => {
+    fetch('http://localhost:8001/run-puppeteer')
+      .then(res => res.json())
+      .then(data => {
+        alert('Отчёт успешно сформирован!');
+      })
+      .catch(err => {
+        alert('Ошибка при запуске puppeteer: ' + err.message);
+      });
+  };
+
 
   const getDataStudent = () => {
     fetch('http://localhost:8000/students')
@@ -65,9 +78,11 @@ export default function Page() {
 
   return (
     <Theme preset={presetGpnDefault}>
-      <div className={cl.container}>
+      <div className={cl.container} id='container'>
+        <Button className={cl.btnReport} onClick={runPuppeteer} label="Создать отчёт" />
         <Select
           className={cl.select}
+          id='selector'
           items={groupItems}
           value={selectedGroup}
           onChange={setSelectedGroup}
@@ -79,6 +94,7 @@ export default function Page() {
             key={student.id}
             verticalSpace="2xl"
             horizontalSpace="2xl"
+            id='studentCard'
             className={`${cl.studentCard} ${cl.block}`}
           >
             <div className={cl.avatarContainer}>
@@ -140,10 +156,10 @@ export default function Page() {
         ))}
 
       </div>
-      <ScreenshotButton
+      {/* <ScreenshotButton
         selectItems={groupItems}
         onSelectChange={setSelectedGroup}
-        selectedValue={selectedGroup} currentPagePath={''}      />
+        selectedValue={selectedGroup} currentPagePath={''} /> */}
     </Theme>
   );
 }

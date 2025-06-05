@@ -3,17 +3,22 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "start": "vite dev",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "start": "concurrently \"vite dev\" \"json-server --watch db.json --port 8000\"",
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@consta/uikit": "^5.20.2",
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.10.0",
+    "puppeteer-core": "^24.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1"
@@ -27,6 +32,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
