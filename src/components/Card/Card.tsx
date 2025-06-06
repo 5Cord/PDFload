@@ -49,7 +49,7 @@ export default function Page() {
       .then((data: Student[]) => {
         setDataStud(data);
         if (data.length > 0) {
-          const groups = [...new Set(data.map((student: { group: never }) => student.group))];
+          const groups = [...new Set(data.map(student => student.group))];
           if (groups.length > 0) {
             setSelectedGroup({
               label: groups[0],
