@@ -34,7 +34,7 @@ export default function Page() {
   const runPuppeteer = () => {
     fetch('http://localhost:8001/run-puppeteer')
       .then(res => res.json())
-      .then(data => {
+      .then(() => {
         alert('Отчёт успешно сформирован!');
       })
       .catch(err => {
@@ -46,7 +46,7 @@ export default function Page() {
   const getDataStudent = () => {
     fetch('http://localhost:8000/students')
       .then(res => res.json())
-      .then(data => {
+      .then((data: Student[]) => {
         setDataStud(data);
         if (data.length > 0) {
           const groups = [...new Set(data.map((student: { group: never }) => student.group))];
