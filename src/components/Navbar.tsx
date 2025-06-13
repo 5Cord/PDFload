@@ -4,6 +4,7 @@ import { IconHome } from '@consta/icons/IconHome';
 import { IconResize } from '@consta/icons/IconResize';
 import cl from './styles/StyleNavBar.module.css'
 import Header from './Header';
+import Footer from './Footer/Footer';
 export default function Navbar() {
     return (
         <>
@@ -28,6 +29,7 @@ export default function Navbar() {
                     </main>
                 </Layout>
             </Layout >
+            <Footer />
         </>
     )
 }
