@@ -1,0 +1,44 @@
+.page {
+    padding: 32px 40px;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subtitle {
+    max-width: 560px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.text {
+    line-height: 1.6;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.list li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 14px;
+    border-left: 3px solid #e0e0e0;
+}

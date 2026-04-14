@@ -8,20 +8,9 @@ import { List } from '@consta/uikit/ListCanary';
 import cl from './style/StyleCard.module.css';
 import { Select } from '@consta/uikit/Select';
 import { useEffect, useState } from 'react';
-// import { Button } from '@consta/uikit/Button';
 import { ScreenshotButton } from '../ScreenshotButton';
 import { Loader } from '@consta/uikit/Loader';
-
-interface Student {
-  id: number;
-  fullName: string;
-  group: string;
-  progress: number;
-  grades: {
-    [subject: string]: number;
-  };
-  achievements: string[];
-}
+import { getStudents, type Student } from '../../services/studentService';
 
 interface Item {
   label: string;
@@ -46,8 +35,7 @@ export default function Page() {
   };
 
   const getDataStudent = () => {
-    fetch('http://localhost:8000/students')
-      .then((res) => res.json())
+    getStudents()
       .then((data: Student[]) => {
         setDataStud(data);
         if (data.length > 0) {
@@ -125,7 +113,6 @@ export default function Page() {
   return (
     <Theme preset={presetGpnDefault}>
       <div className={cl.container} id="container">
-        {/* <Button className={cl.btnReport} onClick={runPuppeteer} label="Создать отчёт" /> */}
         <ScreenshotButton
           selectItems={groupItems}
           onSelectChange={handleGroupChange}

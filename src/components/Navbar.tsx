@@ -5,30 +5,28 @@ import { IconResize } from '@consta/icons/IconResize';
 import cl from './styles/StyleNavBar.module.css'
 import Header from './Header';
 import Footer from './Footer/Footer';
+
 export default function Navbar() {
     return (
         <>
             <Header />
             <Layout>
-                <Layout flex={1} className={cl.containerMenu}>
-                    <NavLink
-                        to="/"
-                        className={({ isActive }) => isActive ? cl.activeLink : ''}
-                    >
+                <nav className={cl.containerMenu}>
+                    <NavLink to="/" className={({ isActive }) => isActive ? cl.activeLink : ''}>
                         <IconHome view="secondary" size="xs" className={cl.icon} />
                         Главная
                     </NavLink>
-                    <div className={cl.blockcCntainerMenu}>
-
-                        <NavLink to="/page" className={({ isActive }) => isActive ? cl.activeLink : ''}><IconResize view="secondary" size="xs" className={cl.icon} /> Успеваемость </NavLink>
-                    </div>
-                </Layout>
+                    <NavLink to="/page" className={({ isActive }) => isActive ? cl.activeLink : ''}>
+                        <IconResize view="secondary" size="xs" className={cl.icon} />
+                        Успеваемость
+                    </NavLink>
+                </nav>
                 <Layout flex={5} className={cl.containerMain}>
                     <main>
                         <Outlet />
                     </main>
                 </Layout>
-            </Layout >
+            </Layout>
             <Footer />
         </>
     )

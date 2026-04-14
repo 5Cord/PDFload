@@ -1,63 +1,63 @@
 import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
-import { Text } from '@consta/uikit/TextDeprecated';
-import cl from './styles/StyleCard.module.css';
+import { Text } from '@consta/uikit/Text';
+import cl from './styles/HomePage.module.css';
 
 export default function HomePage() {
     return (
         <Theme preset={presetGpnDefault}>
-            <div className={cl.container} id='container'>
-                <Text
-                    size="4xl"
-                    as="h1"
-                    align="center"
-                    view="primary"
-                    weight="bold"
-                    className={cl.title}
-                >
-                    Главная страница
-                </Text>
-                <br></br>
+            <div className={cl.page}>
+                <section className={cl.hero}>
+                    <Text as="h1" size="4xl" weight="bold" view="primary">
+                        Система мониторинга успеваемости
+                    </Text>
+                    <Text size="l" view="secondary" className={cl.subtitle}>
+                        Просматривайте данные студентов по группам и формируйте PDF-отчёты в один клик
+                    </Text>
+                </section>
 
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Съешь ещё этих мягких французских булок да выпей чаю
-                </Text>
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Лорем Ипсум — это тип текста-заполнителя, обычно используемый в
-                    дизайне и издательском деле для заполнения пространства на странице и
-                    создания впечатления о том, как будет выглядеть конечный контент.
-                </Text>
+                <section className={cl.section}>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">О системе</Text>
+                    <Text size="m" view="secondary" className={cl.text}>
+                        PDFload — инструмент для преподавателей и кураторов, который собирает данные
+                        об успеваемости студентов: оценки по предметам, процент усвоения материала
+                        и достижения. Информация сгруппирована по учебным группам и доступна на одной странице.
+                    </Text>
+                </section>
 
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Текст-заполнитель имеет решающее значение для дизайнеров, чтобы
-                    визуализировать макеты, не отвлекаясь от реального контента. Он
-                    позволяет сосредоточиться на эстетике и структуре, обеспечивая
-                    сбалансированную презентацию.
-                </Text>
+                <section className={cl.section}>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">Как это помогает</Text>
+                    <ul className={cl.list}>
+                        <li>
+                            <Text size="m" view="primary" weight="semibold">Экономия времени</Text>
+                            <Text size="m" view="secondary">
+                                Отчёт по всем студентам группы формируется автоматически — не нужно вручную
+                                делать скриншоты или копировать данные.
+                            </Text>
+                        </li>
+                        <li>
+                            <Text size="m" view="primary" weight="semibold">Удобный обзор</Text>
+                            <Text size="m" view="secondary">
+                                Все студенты одной группы видны на одном экране: оценки, прогресс,
+                                достижения — без переключения между таблицами.
+                            </Text>
+                        </li>
+                        <li>
+                            <Text size="m" view="primary" weight="semibold">Готовый PDF</Text>
+                            <Text size="m" view="secondary">
+                                Кнопка «Создать отчёт» запускает автоматическую съёмку каждой группы
+                                и собирает всё в один PDF-файл, готовый к печати или отправке.
+                            </Text>
+                        </li>
+                    </ul>
+                </section>
 
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    В творческих проектах макет имеет решающее значение для эффективной
-                    передачи сообщений. Лорем Ипсум позволяет дизайнерам экспериментировать
-                    с различными элементами, сосредоточившись на композиции.
-                </Text>
-
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Типографика играет центральную роль в эффективном дизайне, существенно
-                    влияя на восприятие контента. Использование Лорем Ипсум разной длины и
-                    стилей позволяет дизайнерам увидеть, как взаимодействуют различные
-                    шрифты и размеры.
-                </Text>
-
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Использование Лорем Ипсум в русском тексте позволяет дизайнерам
-                    размещать элементы таким образом, чтобы естественным образом направлять
-                    взгляд зрителей по странице.
-                </Text>
-
-                <Text size="3xl" view="primary" className={cl.paragraph}>
-                    Лорем Ипсум на русском языке имеет решающее значение в веб-дизайне для
-                    создания адаптивных макетов, которые адаптируются к разным размерам
-                    экрана.
-                </Text>
+                <section className={cl.section}>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">С чего начать</Text>
+                    <Text size="m" view="secondary" className={cl.text}>
+                        Перейдите на страницу <b>Успеваемость</b> в боковом меню, выберите группу
+                        из списка и нажмите <b>Создать отчёт</b> — PDF будет сформирован автоматически.
+                    </Text>
+                </section>
             </div>
         </Theme>
     );
