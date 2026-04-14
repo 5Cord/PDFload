@@ -8,54 +8,50 @@ export default function HomePage() {
             <div className={cl.page}>
                 <section className={cl.hero}>
                     <Text as="h1" size="4xl" weight="bold" view="primary">
-                        Система мониторинга успеваемости
+                        Система автоматической генерации PDF-отчётов
                     </Text>
                     <Text size="l" view="secondary" className={cl.subtitle}>
-                        Просматривайте данные студентов по группам и формируйте PDF-отчёты в один клик
+                        Автоматический сбор скриншотов по каждому пункту выпадающего списка
+                        и формирование единого печатного документа
                     </Text>
                 </section>
 
                 <section className={cl.section}>
-                    <Text as="h2" size="xl" weight="semibold" view="primary">О системе</Text>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">Предпосылки</Text>
                     <Text size="m" view="secondary" className={cl.text}>
-                        PDFload — инструмент для преподавателей и кураторов, который собирает данные
-                        об успеваемости студентов: оценки по предметам, процент усвоения материала
-                        и достижения. Информация сгруппирована по учебным группам и доступна на одной странице.
+                        Отдел менеджеров столкнулся с задачей: для составления печатных отчётов
+                        требовалось вручную делать скриншоты по каждому пункту из выпадающего списка.
+                        При объёме свыше 1000 позиций это занимало огромное количество времени
+                        и было подвержено ошибкам — пункты пропускались, скриншоты делались
+                        в разном масштабе, документ собирался вручную.
                     </Text>
                 </section>
 
                 <section className={cl.section}>
-                    <Text as="h2" size="xl" weight="semibold" view="primary">Как это помогает</Text>
-                    <ul className={cl.list}>
-                        <li>
-                            <Text size="m" view="primary" weight="semibold">Экономия времени</Text>
-                            <Text size="m" view="secondary">
-                                Отчёт по всем студентам группы формируется автоматически — не нужно вручную
-                                делать скриншоты или копировать данные.
-                            </Text>
-                        </li>
-                        <li>
-                            <Text size="m" view="primary" weight="semibold">Удобный обзор</Text>
-                            <Text size="m" view="secondary">
-                                Все студенты одной группы видны на одном экране: оценки, прогресс,
-                                достижения — без переключения между таблицами.
-                            </Text>
-                        </li>
-                        <li>
-                            <Text size="m" view="primary" weight="semibold">Готовый PDF</Text>
-                            <Text size="m" view="secondary">
-                                Кнопка «Создать отчёт» запускает автоматическую съёмку каждой группы
-                                и собирает всё в один PDF-файл, готовый к печати или отправке.
-                            </Text>
-                        </li>
-                    </ul>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">Решение</Text>
+                    <Text size="m" view="secondary" className={cl.text}>
+                        Под этот запрос была разработана данная система. Она автоматически
+                        перебирает все пункты выпадающего списка, делает скриншот страницы
+                        для каждого из них и собирает всё в один PDF-файл — без участия пользователя.
+                        Достаточно нажать одну кнопку.
+                    </Text>
                 </section>
 
                 <section className={cl.section}>
-                    <Text as="h2" size="xl" weight="semibold" view="primary">С чего начать</Text>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">Данные</Text>
                     <Text size="m" view="secondary" className={cl.text}>
-                        Перейдите на страницу <b>Успеваемость</b> в боковом меню, выберите группу
-                        из списка и нажмите <b>Создать отчёт</b> — PDF будет сформирован автоматически.
+                        В текущей версии используются моковые данные — студенты и группы заданы
+                        в коде. Это позволяет запускать и демонстрировать систему без подключения
+                        к реальной базе данных или внешнему API.
+                    </Text>
+                </section>
+
+                <section className={cl.section}>
+                    <Text as="h2" size="xl" weight="semibold" view="primary">Как использовать</Text>
+                    <Text size="m" view="secondary" className={cl.text}>
+                        Перейдите на страницу <b>Успеваемость</b>, выберите группу из списка
+                        для просмотра данных. Нажмите <b>Создать отчёт (PDF)</b> —
+                        система автоматически пройдёт по всем группам и сохранит PDF на ваш компьютер.
                     </Text>
                 </section>
             </div>
