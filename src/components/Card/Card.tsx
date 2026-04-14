@@ -23,17 +23,6 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [isGroupChanging, setIsGroupChanging] = useState(false);
 
-  const runPuppeteer = () => {
-    fetch('http://localhost:8001/run-puppeteer')
-      .then((res) => res.json())
-      .then(() => {
-        alert('Отчёт успешно сформирован!');
-      })
-      .catch((err) => {
-        alert('Ошибка при запуске puppeteer: ' + err.message);
-      });
-  };
-
   const getDataStudent = () => {
     getStudents()
       .then((data: Student[]) => {
@@ -118,7 +107,6 @@ export default function Page() {
           onSelectChange={handleGroupChange}
           selectedValue={selectedGroup}
           currentPagePath={window.location.pathname}
-          isLoading={isLoading || isGroupChanging}
         />
         <Select
           className={cl.select}
